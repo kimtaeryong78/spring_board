@@ -1,15 +1,13 @@
 package jmp.spring.vo;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
 public class BoardVO {
-	int bno;
-	String title;
-	String content;
-	String writer;
-	Date regdate;
-	Date updatedate;
+	int bno;				//board number
+	String title;			//board title
+	String content;			//board content
+	String writer;			//board writer
+	String regdate;			//board regist date
+	String updatedate;		//board update date
 }

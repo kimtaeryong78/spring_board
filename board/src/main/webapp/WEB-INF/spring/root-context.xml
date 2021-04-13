@@ -8,26 +8,33 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- hikariCP -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="book_ex" />
-		<property name="password" value="book_ex" />
+		<property name="username" value="jweb" />
+		<property name="password" value="4321" />
 	</bean>
 
+	<!--  dataSource -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
 		destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 
+	<!-- sessionFactory -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
+	<!-- mapper -->
 	<mybatis-spring:scan base-package="jmp.spring.mapper"/>
 	
-	<context:component-scan base-package="jmp.spring.vo"/>
+	<!-- service -->
+	<context:component-scan base-package="jmp.spring.service"/>
+	
 </beans>
