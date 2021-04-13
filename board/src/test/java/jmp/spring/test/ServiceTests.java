@@ -30,7 +30,6 @@ public class ServiceTests {
 		board.setTitle("test");
 		board.setContent("test");
 		board.setWriter("test");
-		log.info("service================"+ service.insertBoard(board));
-		
+		log.info("service================"+ service.insertBoard(board));	
 	}
 }

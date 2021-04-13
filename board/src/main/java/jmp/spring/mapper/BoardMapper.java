@@ -9,9 +9,9 @@ public interface BoardMapper {
 	
 	public int insertBoard(BoardVO board); 		//insert board
 	
-	//public BoardVO getBoard(int bno);			//get board by bno
+	public BoardVO getBoard(int bno);			//get board by bno
 	
-	//public int updateBoard(BoardVO board);	//update board
+	public int updateBoard(BoardVO board);		//update board
 	
 	//public int deleteBoard(int bno);			//delete board by bno
 }

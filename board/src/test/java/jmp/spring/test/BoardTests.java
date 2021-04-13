@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import jmp.spring.mapper.BoardMapper;
+import jmp.spring.vo.BoardVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -22,4 +23,15 @@ public class BoardTests {
 	public void getBoardListTest() {
 		log.info("========================================="+bm.getList());
 	}//get board list
+	
+	@Test
+	public void testinsert() {
+		BoardVO board = new BoardVO();
+		board.setTitle("test");
+		board.setContent("testcontent");
+		board.setWriter("tester");
+		
+		log.info("========================================"+bm.insertBoard(board));
+		log.info(board.getBno());
+	}
 }

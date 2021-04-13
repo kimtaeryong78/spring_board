@@ -1,17 +1,4 @@
-	@GetMapping("get")
-	public String getBoardByBno(@RequestParam int bno, Model model) {
-		BoardVO board = null;
-		board = bm.getBoard(bno);
-		try {
-			if (board == null) {
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		model.addAttribute("board", board);
-		return "/board/get";
-	}// get board by bno
+	
 
 	@PostMapping("edit")
 	public String updateBoard(BoardVO board) {

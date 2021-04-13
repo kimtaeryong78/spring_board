@@ -7,13 +7,27 @@
 	<select id="getList" resultType="jmp.spring.vo.BoardVO">
 		select * from tbl_board order BY bno DESC
 	</select>
-	<insert id="insertBoard">
+	
+	<!-- insert board -->
+	<insert id="insertBoard" >
+		<selectKey resultType="int" keyProperty="bno" order="BEFORE">
+			select seq_board.nextval from dual
+		</selectKey>
+		
 		insert into tbl_board (bno, title, content, writer, regdate, updatedate)
-		values (seq_board.nextval, #{title}, #{content}, #{writer}, sysdate, sysdate)
+		values (#{bno}, #{title}, #{content}, #{writer}, sysdate, sysdate)
 	</insert>
-	<!-- <select id="getBoard" resultType="jmp.spring.vo.BoardVO"> select * 
-		from tbl_board where bno = #{bno} </select> -->
-	<!-- <update id="updateBoard"> update tbl_board set title = #{title}, content 
-		= #{content}, updatedate = sysdate where bno = #{bno} </update> <delete id="deleteBoard"> 
+	
+	<!-- get board by bno -->
+	<select id="getBoard" resultType="jmp.spring.vo.BoardVO"> 
+		select * from tbl_board where bno = #{bno} 
+	</select>
+
+	<!-- update board -->
+	<update id="updateBoard"> 
+		update tbl_board set title = #{title}, content= #{content}, writer = #{writer}+'-수정', updatedate = sysdate where bno = #{bno} 
+	</update> 
+		
+		<!-- <delete id="deleteBoard"> 
 		delete from tbl_board where bno = #{bno} </delete> -->
 </mapper>

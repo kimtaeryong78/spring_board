@@ -23,6 +23,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int insertBoard(BoardVO board) {
 		return bm.insertBoard(board);
+	}//insertBoard
+
+	@Override
+	public BoardVO getBoard(int bno) {
+		return bm.getBoard(bno);
+	}//get board by bno
+
+	@Override
+	public int updateBoard(BoardVO board) {
+		return bm.updateBoard(board);
 	}//insert board
 
 }

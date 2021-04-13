@@ -10,7 +10,7 @@ public interface BoardService {
 	
 	public int insertBoard(BoardVO board); 	//insert board
 	
-	//public BoardVO getBoard(int bno);		//get board by bno
+	public BoardVO getBoard(int bno);		//get board by bno
 	
-	
+	public int updateBoard(BoardVO board);		//update board
 }
