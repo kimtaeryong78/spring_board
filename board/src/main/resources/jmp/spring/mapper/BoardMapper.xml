@@ -25,9 +25,10 @@
 
 	<!-- update board -->
 	<update id="updateBoard"> 
-		update tbl_board set title = #{title}, content= #{content}, writer = #{writer}+'-수정', updatedate = sysdate where bno = #{bno} 
+		update tbl_board set title = #{title}, content= #{content}, writer = #{writer}, updatedate = sysdate where bno = #{bno} 
 	</update> 
 		
-		<!-- <delete id="deleteBoard"> 
-		delete from tbl_board where bno = #{bno} </delete> -->
+	<delete id="deleteBoard"> 
+		delete from tbl_board where bno = #{bno} 
+	</delete>
 </mapper>

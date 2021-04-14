@@ -23,7 +23,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int insertBoard(BoardVO board) {
 		return bm.insertBoard(board);
-	}//insertBoard
+	}//insert Board
 
 	@Override
 	public BoardVO getBoard(int bno) {
@@ -33,6 +33,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateBoard(BoardVO board) {
 		return bm.updateBoard(board);
-	}//insert board
+	}//update board
+
+	@Override
+	public int deleteBoard(int bno) {
+		return bm.deleteBoard(bno);
+	}//delete board
 
 }
