@@ -36,6 +36,7 @@
 		</tr>
 	</table>
 	<button onclick="location.href='/board/edit?bno=${board.bno}'">수정</button>
+	<button onClick="location.href='/board/delete?bno=${board.bno}'">삭제</button>
 	<button onclick="location.href='/board/list'">목록</button>
 </body>
 </html>

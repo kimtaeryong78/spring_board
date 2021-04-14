@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jmp.spring.service.BoardService;
@@ -26,7 +25,7 @@ public class BoardController {
 	BoardService service;
 
 	@GetMapping("list")
-	public void boardList(Model model) {
+	public void boardList(Model model) throws Exception {
 		List<BoardVO> boardList = null;
 		boardList = service.getList();
 		try {
