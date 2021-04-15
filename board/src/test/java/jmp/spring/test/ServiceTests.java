@@ -32,4 +32,23 @@ public class ServiceTests {
 		board.setWriter("test");
 		log.info("service================"+ service.insertBoard(board));	
 	}
+	
+	@Test
+	public void delete() {
+		int bno = 39;
+		log.info("delete==============="+ service.deleteBoard(bno));
+	}
+	
+	@Test
+	public void modify() {
+		
+		BoardVO board = service.getBoard(38);
+		
+		board.setContent("test eclipse");
+		board.setTitle("titletitle");
+		
+		log.info("modify=================================" + service.updateBoard(board));
+		
+		
+	}
 }

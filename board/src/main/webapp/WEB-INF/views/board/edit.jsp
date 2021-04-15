@@ -30,6 +30,7 @@
 					<div class="form-group">
 						<label>Writer</label><input type="text" class="form-control" name="writer" value="${board.writer}" readonly>
 					</div>
+					
 					<button type="submit" data-oper="modify" class="btn btn-default">Modify</button>
 					<button type="button" data-oper="delete" class="btn btn-danger" onclick="location.href='/board/delete?bno=${board.bno}'" >Remove</button>
 					<button type="button" data-oper="list" class="btn btn-info" onclick="location.href='/board/list'">List</button>
@@ -38,5 +39,4 @@
 		</div>
 	</div>
 </div>
-
 <%@ include file="../includes/footer.jsp"%>

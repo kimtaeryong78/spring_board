@@ -41,7 +41,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel">Message</h4>
+								<h4 class="modal-title" id="myModalLabel">Info</h4>
 							</div>
 							<div class="modal-body">처리가 완료되었습니다.</div>
 							<div class="modal-footer">
@@ -68,6 +68,8 @@
 		function checkModel(result){
 			if(result === ''||history.state){return;}
 			if(parseInt(result) > 0){$(".modal-body").html("${result}번 게시글이 등록되었습니다.");}
+			if(result === 'delete'){$(".modal-body").html("${bno}번 게시글 삭제 처리 되었습니다.");}
+			if(result === 'modify'){$(".modal-body").html("${bno}번 게시글 수정 처리 되었습니다.");}
 			$("#myModal").modal("show");
 		};	
 		
@@ -81,6 +83,7 @@
 		$("#regBtn").on("click",function(){
 			self.location = "/board/register";
 		});
+		
 	});
 </script>
 <%@ include file="../includes/footer.jsp"%>

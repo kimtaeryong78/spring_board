@@ -84,7 +84,7 @@ public class BoardController {
 	
 	@PostMapping("edit")
 	public String updateBoard(BoardVO board,RedirectAttributes rttr) {
-		rttr.addAttribute("bno",board.getBno());
+		rttr.addFlashAttribute("bno",board.getBno());
 		
 		int temp = service.updateBoard(board);
 		
@@ -93,7 +93,7 @@ public class BoardController {
 				throw new Exception();
 			} else {
 				/* rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 수정 되었습니다."); */
-				rttr.addFlashAttribute("result","success");
+				rttr.addFlashAttribute("result","modify");
 				log.info("==========================================update"+board.getBno());
 			}
 		} catch (Exception e) {
@@ -110,7 +110,8 @@ public class BoardController {
 				throw new Exception();
 			} else {
 				/* rttr.addFlashAttribute("resMsg", bno + "번 게시물 삭제 되었습니다."); */
-				rttr.addFlashAttribute("result","success");
+				rttr.addFlashAttribute("bno",bno);
+				rttr.addFlashAttribute("result","delete");
 				log.info("==========================================delete" + bno);
 			}
 		} catch (Exception e) {
