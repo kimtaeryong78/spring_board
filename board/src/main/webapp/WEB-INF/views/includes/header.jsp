@@ -60,7 +60,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+				<a class="navbar-brand" href="/board/list">board</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -304,5 +304,4 @@
 
 		<div id="page-wrapper">
 
-			<script
-				src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

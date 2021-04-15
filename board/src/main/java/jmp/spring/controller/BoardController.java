@@ -40,6 +40,7 @@ public class BoardController {
 	
 	@GetMapping("register")
 	public String boardForm() {
+		log.info("===================");
 		return "/board/register";
 	}// Form to insert board
 
@@ -49,9 +50,10 @@ public class BoardController {
 		int temp = service.insertBoard(board);
 		
 		try {
-			if (temp == 0) throw new Exception();
+			if (temp < 0) throw new Exception();
 			else {
-				rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 등록 되었습니다.");
+				/* rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 등록 되었습니다."); */
+				rttr.addFlashAttribute("result",board.getBno());
 				log.info("==========================================insert"+board.getBno());
 			}
 		} catch (Exception e) {log.error("error>> insert fail");} 
@@ -90,13 +92,14 @@ public class BoardController {
 			if (temp == 0) {
 				throw new Exception();
 			} else {
-				rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 수정 되었습니다.");
+				/* rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 수정 되었습니다."); */
+				rttr.addFlashAttribute("result","success");
 				log.info("==========================================update"+board.getBno());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/board/get";
+		return "redirect:/board/list";
 	}// update board
 	
 	@GetMapping("delete")
@@ -106,7 +109,8 @@ public class BoardController {
 			if (temp == 0) {
 				throw new Exception();
 			} else {
-				rttr.addFlashAttribute("resMsg", bno + "번 게시물 삭제 되었습니다.");
+				/* rttr.addFlashAttribute("resMsg", bno + "번 게시물 삭제 되었습니다."); */
+				rttr.addFlashAttribute("result","success");
 				log.info("==========================================delete" + bno);
 			}
 		} catch (Exception e) {
