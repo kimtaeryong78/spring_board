@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jmp.spring.service.BoardService;
 import jmp.spring.vo.BoardVO;
+import jmp.spring.vo.Criteria;
+import jmp.spring.vo.Page;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -20,14 +22,18 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
-
+	
 	@Setter(onMethod_ = @Autowired)
 	BoardService service;
 
 	@GetMapping("list")
-	public void boardList(Model model) throws Exception {
+	public void boardList(Criteria cri, Model model){
 		List<BoardVO> boardList = null;
-		boardList = service.getList();
+		
+		int total = service.totalBoard(cri);
+		
+		boardList = service.getListWithPaging(cri);
+		
 		try {
 			if (boardList == null) {
 				throw new Exception();
@@ -36,6 +42,7 @@ public class BoardController {
 			log.error("error>> nullPointerException(boardList)");
 		}
 		model.addAttribute("list", boardList);
+		model.addAttribute("pageValues",new Page(service.totalBoard(cri),cri));
 	}// board list
 	
 	@GetMapping("register")

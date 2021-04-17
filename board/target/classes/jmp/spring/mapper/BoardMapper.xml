@@ -7,6 +7,13 @@
 	<select id="getList" resultType="jmp.spring.vo.BoardVO">
 		select * from tbl_board order BY bno DESC
 	</select>
+	<select id="getListWithPaging" resultType="jmp.spring.vo.BoardVO">
+		select * from (SELECT ROW_NUMBER() OVER(ORDER BY a.bno asc) rn, a.* FROM tbl_board a) where rn BETWEEN ((#{pageNum}-1) * #{amount})+1 and #{pageNum} * #{amount}
+	</select>
+	
+	<select id="totalBoard" resultType="int">
+		select count(*) from tbl_board
+	</select>
 	
 	<!-- insert board -->
 	<insert id="insertBoard" >

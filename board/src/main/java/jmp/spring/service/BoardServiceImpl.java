@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import jmp.spring.mapper.BoardMapper;
 import jmp.spring.vo.BoardVO;
+import jmp.spring.vo.Criteria;
 import lombok.Setter;
 
 @Service
@@ -20,6 +21,16 @@ public class BoardServiceImpl implements BoardService{
 		return bm.getList();
 	}// get board list
 
+	@Override
+	public List<BoardVO> getListWithPaging(Criteria cri) {
+		return bm.getListWithPaging(cri);
+	}
+	
+	@Override
+	public int totalBoard(Criteria cri) {
+		return bm.totalBoard(cri);
+	}
+	
 	@Override
 	public int insertBoard(BoardVO board) {
 		return bm.insertBoard(board);

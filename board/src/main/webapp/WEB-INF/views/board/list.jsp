@@ -36,6 +36,23 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<div class="pull-right">
+					<nav aria-label="Page navigation example">
+	  					<ul class="pagination">
+	  						<c:if test="${pageValues.prev}">
+	    						<li class="page-item" hidden="hidden"><a class="page-link" href="?pageNum=1">First</a></li>
+	    						<li class="page-item" hidden="hidden"><a class="page-link" href="?pageNum=${pageValues.start-1}">Previous</a></li>
+	    					</c:if>
+	    					<c:forEach var="num" begin="${pageValues.start}" end="${pageValues.end}">
+	    						<li class="page-item ${pageValues.cri.pageNum == num ? 'active':''}"><a class="page-link" href="?pageNum=${num}">${num}</a></li>
+	    					</c:forEach>
+	    					<c:if test="${pageValues.next}">
+	    						<li class="page-item"><a class="page-link" href="?pageNum=${pageValues.end + 1}">Next</a></li>
+	    						<li class="page-item"><a class="page-link" href="?pageNum=${pageValues.realEnd}">End</a></li>
+	    					</c:if>
+	  					</ul>
+					</nav>
+				</div>
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -83,7 +100,6 @@
 		$("#regBtn").on("click",function(){
 			self.location = "/board/register";
 		});
-		
 	});
 </script>
 <%@ include file="../includes/footer.jsp"%>
