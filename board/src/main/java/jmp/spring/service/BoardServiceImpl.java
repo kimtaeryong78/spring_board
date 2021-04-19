@@ -24,12 +24,12 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> getListWithPaging(Criteria cri) {
 		return bm.getListWithPaging(cri);
-	}
+	}//get list after paging process
 	
 	@Override
 	public int totalBoard(Criteria cri) {
 		return bm.totalBoard(cri);
-	}
+	}//total number in board
 	
 	@Override
 	public int insertBoard(BoardVO board) {
