@@ -10,7 +10,7 @@ public interface BoardMapper {
 	
 	public List<BoardVO> getListWithPaging(Criteria cri);	//get list after paging process
 	
-	public int totalBoard(Criteria cri);
+	public int totalBoard(Criteria cri);		//total number in board
 	
 	public int insertBoard(BoardVO board); 		//insert board
 	

@@ -28,6 +28,12 @@ public class BoardTests {
 	}//get board list
 	
 	@Test
+	public void totalBoardTest() {
+		Criteria cri = new Criteria();
+		log.info(bm.totalBoard(cri));
+	}
+	
+	@Test
 	public void testinsert() {
 		BoardVO board = new BoardVO();
 		board.setTitle("test");
@@ -43,5 +49,18 @@ public class BoardTests {
 		Criteria cri = new Criteria();
 		List<BoardVO> list = bm.getListWithPaging(cri);
 		log.info(list);
+	}
+	
+	@Test
+	public void searchTest() {
+		Criteria cri = new Criteria();
+		cri.setAmount(10);
+		cri.setPageNum(210);
+		cri.setWord("es");
+		cri.setType("TW");
+		
+		List<BoardVO> list = bm.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
 	}
 }

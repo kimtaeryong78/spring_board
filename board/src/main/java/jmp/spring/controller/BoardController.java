@@ -42,7 +42,8 @@ public class BoardController {
 			log.error("error>> nullPointerException(boardList)");
 		}
 		model.addAttribute("list", boardList);
-		model.addAttribute("pageValues",new Page(service.totalBoard(cri),cri));
+		model.addAttribute("pageValues",new Page(total,cri)) ;
+		
 	}// board list
 	
 	@GetMapping("register")

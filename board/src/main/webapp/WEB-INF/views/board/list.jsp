@@ -36,19 +36,45 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<div class="row">
+					<div class="col-lg-12">
+						<form action="/board/list" id="searchForm" method="get">
+							<select name="amount" class="form-select" aria-label="Default select example">
+								<option selected value="${pageValues.cri.amount}">--</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+							</select>
+							<select name="type" class="form-select" aria-label="Default select example">
+								<option selected value='null'>--</option>
+								<option value="T">제목</option>
+								<option value="C">내용</option>
+								<option value="W">작성자</option>
+								<option value="TC">제목 or 내용</option>
+								<option value="TW">제목 or 작성자</option>
+								<option value="TWC">제목 or 내용 or 작성자</option>
+							</select>
+							<input type="text" name="word" value=''>
+							<input type="hidden" name="pageNum" value="${pageValues.cri.pageNum}">
+							<button class="btn btn-default">Search</button>
+						</form>
+					</div>
+				</div>
+				
 				<div class="pull-right">
 					<nav aria-label="Page navigation example">
 	  					<ul class="pagination">
 	  						<c:if test="${pageValues.prev}">
-	    						<li class="page-item" hidden="hidden"><a class="page-link" href="?pageNum=1">First</a></li>
-	    						<li class="page-item" hidden="hidden"><a class="page-link" href="?pageNum=${pageValues.start-1}">Previous</a></li>
+	    						<li class="page-item" hidden="hidden"><a class="page-link" href="?pageNum=1"><<</a></li>
+	    						<li class="page-item" hidden="hidden"><a class="page-link" href="?pageNum=${pageValues.start-1}"><</a></li>
 	    					</c:if>
 	    					<c:forEach var="num" begin="${pageValues.start}" end="${pageValues.end}">
 	    						<li class="page-item ${pageValues.cri.pageNum == num ? 'active':''}"><a class="page-link" href="?pageNum=${num}">${num}</a></li>
 	    					</c:forEach>
 	    					<c:if test="${pageValues.next}">
-	    						<li class="page-item"><a class="page-link" href="?pageNum=${pageValues.end + 1}">Next</a></li>
-	    						<li class="page-item"><a class="page-link" href="?pageNum=${pageValues.realEnd}">End</a></li>
+	    						<li class="page-item"><a class="page-link" href="?pageNum=${pageValues.end + 1}">></a></li>
+	    						<li class="page-item"><a class="page-link" href="?pageNum=${pageValues.realEnd}">>></a></li>
 	    					</c:if>
 	  					</ul>
 					</nav>
@@ -99,6 +125,15 @@
 		
 		$("#regBtn").on("click",function(){
 			self.location = "/board/register";
+		});
+		
+		$(".page-item").href
+		
+		
+		$("#searchForm button").on("click",function(e){
+			e.preventDefault;
+			
+			$("#searchForm").submit();
 		});
 	});
 </script>
