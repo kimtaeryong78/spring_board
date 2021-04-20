@@ -70,7 +70,7 @@ public class BoardController {
 	}// insert board
 	
 	@GetMapping("get")
-	public String getBoardByBno(@RequestParam int bno, Model model) {
+	public String getBoardByBno(@RequestParam int bno,Criteria cri, Model model) {
 		BoardVO board = null;
 		board = service.getBoard(bno);
 		try {
@@ -85,23 +85,28 @@ public class BoardController {
 	}// get board by bno
 	
 	@GetMapping("edit")
-	public String updateBoardForm(@RequestParam int bno,Model model) {
+	public String updateBoardForm(@RequestParam int bno, Criteria cri, Model model) {
 		model.addAttribute("board",service.getBoard(bno));
+		
 		return "/board/edit";
 	}//edit form
 	
 	@PostMapping("edit")
-	public String updateBoard(BoardVO board,RedirectAttributes rttr) {
+	public String updateBoard(BoardVO board, Criteria cri, RedirectAttributes rttr) {
 		rttr.addFlashAttribute("bno",board.getBno());
 		
 		int temp = service.updateBoard(board);
 		
 		try {
-			if (temp == 0) {
+			if (temp < 1) {
 				throw new Exception();
 			} else {
 				/* rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 수정 되었습니다."); */
 				rttr.addFlashAttribute("result","modify");
+				rttr.addAttribute("pageNum",cri.getPageNum());
+				rttr.addAttribute("amount",cri.getAmount());
+				rttr.addAttribute("word",cri.getWord());
+				rttr.addAttribute("type",cri.getType());
 				log.info("==========================================update"+board.getBno());
 			}
 		} catch (Exception e) {
@@ -111,15 +116,19 @@ public class BoardController {
 	}// update board
 	
 	@GetMapping("delete")
-	public String deleteBoard(@RequestParam int bno, RedirectAttributes rttr) {
+	public String deleteBoard(@RequestParam int bno, Criteria cri, RedirectAttributes rttr) {
 		int temp = service.deleteBoard(bno);
 		try {
-			if (temp == 0) {
+			if (temp < 1) {
 				throw new Exception();
 			} else {
 				/* rttr.addFlashAttribute("resMsg", bno + "번 게시물 삭제 되었습니다."); */
 				rttr.addFlashAttribute("bno",bno);
 				rttr.addFlashAttribute("result","delete");
+				rttr.addAttribute("pageNum",cri.getPageNum());
+				rttr.addAttribute("amount",cri.getAmount());
+				rttr.addAttribute("word",cri.getWord());
+				rttr.addAttribute("type",cri.getType());
 				log.info("==========================================delete" + bno);
 			}
 		} catch (Exception e) {

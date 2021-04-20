@@ -34,5 +34,12 @@
 		</div>
 	</div>
 </div>
-
+<!-- <script type="text/javascript">
+$('button').on("click",function(e){
+	
+	if(/.{2,6}/.test()){
+		false;
+	}
+});
+</script> -->
 <%@ include file="../includes/footer.jsp"%>
