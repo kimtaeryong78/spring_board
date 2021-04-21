@@ -34,13 +34,6 @@ public class BoardController {
 		
 		boardList = service.getListWithPaging(cri);
 		
-		try {
-			if (boardList == null) {
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			log.error("error>> nullPointerException(boardList)");
-		}
 		model.addAttribute("list", boardList);
 		model.addAttribute("pageValues",new Page(total,cri)) ;
 		
@@ -73,13 +66,7 @@ public class BoardController {
 	public String getBoardByBno(@RequestParam int bno,Criteria cri, Model model) {
 		BoardVO board = null;
 		board = service.getBoard(bno);
-		try {
-			if (board == null) {
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 		model.addAttribute("board", board);
 		return "/board/get";
 	}// get board by bno
@@ -99,10 +86,12 @@ public class BoardController {
 		
 		try {
 			if (temp < 1) {
+				rttr.addFlashAttribute("result","error");
 				throw new Exception();
 			} else {
 				/* rttr.addFlashAttribute("resMsg",board.getBno()+"번 게시물 수정 되었습니다."); */
 				rttr.addFlashAttribute("result","modify");
+				
 				rttr.addAttribute("pageNum",cri.getPageNum());
 				rttr.addAttribute("amount",cri.getAmount());
 				rttr.addAttribute("word",cri.getWord());
@@ -120,11 +109,13 @@ public class BoardController {
 		int temp = service.deleteBoard(bno);
 		try {
 			if (temp < 1) {
+				rttr.addFlashAttribute("result","error");
 				throw new Exception();
 			} else {
 				/* rttr.addFlashAttribute("resMsg", bno + "번 게시물 삭제 되었습니다."); */
 				rttr.addFlashAttribute("bno",bno);
 				rttr.addFlashAttribute("result","delete");
+				
 				rttr.addAttribute("pageNum",cri.getPageNum());
 				rttr.addAttribute("amount",cri.getAmount());
 				rttr.addAttribute("word",cri.getWord());

@@ -15,8 +15,7 @@
 			<button id="regBtn" class="btn btn-xs pull-right">Regist board</button></div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<table style="width: 100%"
-					class="table table-striped table-bordered table-hover">
+				<table style="width: 100%" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th>#번호</th>
@@ -36,10 +35,42 @@
 						</tr>
 					</c:forEach>
 				</table>
-				
 				<div id="nullpoint" hidden="hidden">
 					<span>검색 결과가 없습니다.</span>
 				</div>
+				<section class="border p-4 mb-4">
+      <div class="form-outline mb-4">
+        <input type="search" class="form-control" id="datatable-search-input">
+        <label class="form-label" for="datatable-search-input" style="margin-left: 0px;">Search</label>
+      <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 46.4px;"></div><div class="form-notch-trailing"></div></div></div>
+      <div id="datatable" class="datatable">
+<div class="datatable-inner table-responsive ps" style="overflow: auto; position: relative;">
+<div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+<div class="datatable-pagination">
+  <div class="datatable-select-wrapper">
+    <p class="datatable-select-text">Rows per page:</p>
+    <div id="select-wrapper-918223" class="select-wrapper"><div class="form-outline"><input class="form-control select-input placeholder-active active" type="text" role="listbox" aria-multiselectable="false" aria-disabled="false" aria-haspopup="true" aria-expanded="false" readonly=""><span class="select-arrow"></span><div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 0px;"></div><div class="form-notch-trailing"></div></div></div><select name="entries" class="datatable-select select select-initialized">
+      <option value="10" selected="">10</option>
+<option value="25">25</option>
+<option value="50">50</option>
+<option value="200">200</option>
+    </select></div>
+  </div>
+  <div class="datatable-pagination-nav">
+  1 - 10 of 10
+  </div>
+  <div class="datatable-pagination-buttons">
+    
+    <button data-mdb-ripple-color="dark" class="btn btn-link datatable-pagination-button datatable-pagination-left" disabled="true"><i class="fa fa-chevron-left"></i></button>
+    <button data-mdb-ripple-color="dark" class="btn btn-link datatable-pagination-button datatable-pagination-right" disabled="true"><i class="fa fa-chevron-right"></i></button>
+    
+  </div>
+</div>
+
+  </div>
+    </section>
+				
+				
 				
 				
 				<div class="row">
@@ -67,25 +98,23 @@
 					</div>
 				</div>
 				
-						<div class="pull-right">
-							<nav aria-label="Page navigation example">
-			  					<ul class="pagination">
-			  						<c:if test="${pageValues.prev}">
-			    						<li class="page-item" hidden="hidden"><a class="page-link" href="1"><<</a></li>
-			    						<li class="page-item" hidden="hidden"><a class="page-link" href="${pageValues.start-1}"><</a></li>
-			    					</c:if>
-			    					<c:forEach var="num" begin="${pageValues.start}" end="${pageValues.end}">
-			    						<li class="page-item ${pageValues.cri.pageNum == num ? 'active':''}"><a class="page-link" href="${num}">${num}</a></li>
-			    					</c:forEach>
-			    					<c:if test="${pageValues.next}">
-			    						<li class="page-item"><a class="page-link" href="${pageValues.end + 1}">></a></li>
-			    						<li class="page-item"><a class="page-link" href="${pageValues.realEnd}">>></a></li>
-			    					</c:if>
-			  					</ul>
-							</nav>
-						</div>
-					</div>
-
+				<div class="pull-right">
+					<nav aria-label="Page navigation example">
+	  					<ul class="pagination">
+	  						<c:if test="${pageValues.prev}">
+	    						<li class="page-item" hidden="hidden"><a class="page-link" href="1"><<</a></li>
+	    						<li class="page-item" hidden="hidden"><a class="page-link" href="${pageValues.start-1}"><</a></li>
+	    					</c:if>
+	    					<c:forEach var="num" begin="${pageValues.start}" end="${pageValues.end}">
+	    						<li class="page-item ${pageValues.cri.pageNum == num ? 'active':''}"><a class="page-link" href="${num}">${num}</a></li>
+	    					</c:forEach>
+	    					<c:if test="${pageValues.next}">
+	    						<li class="page-item"><a class="page-link" href="${pageValues.end + 1}">></a></li>
+	    						<li class="page-item"><a class="page-link" href="${pageValues.realEnd}">>></a></li>
+	    					</c:if>
+	  					</ul>
+					</nav>
+				</div>
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -96,6 +125,7 @@
 							<div class="modal-body">처리가 완료되었습니다.</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+								<!-- <button type="button" class="btn btn-primary  default">Save changes</button> -->
 							</div>
 						</div>
 					</div>
@@ -105,6 +135,7 @@
 		</div>
 		<!-- end panel -->
 	</div>
+</div>
 <!-- /.row -->
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -153,11 +184,7 @@
 			var str = $('#searchForm').find("input[name='word']").val();
 			
 			if(str != ''){
-				if(!$('#searchForm #type').val()){ 
-					$(".modal-body").html("검색 종류를 선택하세요.");
-					$("#myModal").modal("show");
-					return false; 
-				}
+				if(!$('#searchForm #type').val()){ alert("검색 종류를 선택하세요."); return false; }
 			}
 			$('#searchForm').find("input[name='pageNum']").val('1');
 			
