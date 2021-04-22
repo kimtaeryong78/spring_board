@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jmp.spring.mapper.ReplyMapper;
-import jmp.spring.vo.BoardVO;
 import jmp.spring.vo.Criteria;
 import jmp.spring.vo.ReplyVO;
 import lombok.Setter;
@@ -23,8 +22,8 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public List<ReplyVO> getList(int bno, Criteria cri) {
-		return rm.getList(bno,cri);
+	public List<ReplyVO> getList(int bno) {
+		return rm.getList(bno);
 	}
 
 	@Override
@@ -40,6 +39,16 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public int deleteReply(int rno) {
 		return rm.deleteReply(rno);
+	}
+
+	@Override
+	public int totalReply() {
+		return rm.totalReply();
+	}
+	
+	@Override
+	public List<ReplyVO> getListAfterPaging(Criteria cri, int bno) {
+		return rm.getListAfterPaging(cri, bno);
 	}
 
 }

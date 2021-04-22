@@ -127,4 +127,9 @@ public class BoardController {
 		}
 		return "redirect:/board/list";
 	}//delete
+	
+	@GetMapping("RestTest")
+	public void RestTest() {
+		
+	}
 }

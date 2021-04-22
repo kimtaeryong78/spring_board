@@ -9,7 +9,7 @@
 		<selectKey resultType="int" keyProperty="rno" order="BEFORE">
 			select seq_reply.nextval from dual
 		</selectKey>
-		insert into tbl_reply (rno, bno, reply, replyer, regdate, updatedate)
+		insert into tbl_reply (rno, bno, reply, replyer, replydate, updatedate)
 		values (#{rno}, #{bno}, #{reply}, #{replyer}, sysdate, sysdate)
 	</insert>
 	
@@ -25,7 +25,7 @@
 
 	<!-- update reply -->
 	<update id="updateReply"> 
-		update tbl_reply set reple= #{reply}, replyer = #{replyer}, updatedate = sysdate where rno = #{rno} 
+		update tbl_reply set reply= #{reply}, replyer = #{replyer}, updatedate = sysdate where rno = #{rno} 
 	</update> 
 		
 	<!-- delete reply -->
@@ -36,6 +36,14 @@
 	<!-- total reply -->	
 	<select id="totalReply" resultType="int">
 		select count(*) from tbl_reply
+	</select>
+	
+	<select id="getListAfterPaging" resultType="jmp.spring.vo.ReplyVO">
+		select * from (
+			SELECT ROW_NUMBER() OVER(ORDER BY a.rno asc) rn, a.* FROM tbl_reply a where bno = #{bno}
+		) 
+		
+		where rn BETWEEN ((#{cri.pageNum}-1) * #{cri.amount})+1 and #{cri.pageNum} * #{cri.amount} 
 	</select>
 	
 </mapper>

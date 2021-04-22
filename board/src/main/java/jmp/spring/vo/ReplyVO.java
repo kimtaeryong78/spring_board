@@ -8,6 +8,6 @@ public class ReplyVO {
 	int bno;				//board number
 	String reply;			//reply
 	String replyer;			//replyer
-	String regdate;			//reply regist date
+	String replydate;			//reply regist date
 	String updatedate;		//reply update date
 }
