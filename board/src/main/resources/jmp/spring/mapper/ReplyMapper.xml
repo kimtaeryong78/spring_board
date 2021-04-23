@@ -15,7 +15,12 @@
 	
 	<!-- get tbl_reply table List -->
 	<select id="getList" resultType="jmp.spring.vo.ReplyVO">
-		select * from tbl_reply where bno = #{bno} order BY bno ASC
+		select RNO ,BNO ,REPLY ,REPLYER ,REPLYDATE , 
+			CASE WHEN TO_CHAR(sysdate,'yyyymmdd') = TO_CHAR(updatedate,'yyyymmdd') 
+	    		THEN TO_CHAR(updatedate,'am hh:mi:ss')
+	    		ELSE TO_CHAR(updatedate,'yyyy/mm/dd') 
+			END UPDATEDATE
+		from tbl_reply where bno = #{bno} order BY bno ASC
 	</select>
 
 	<!-- get reply by bno -->
@@ -39,11 +44,15 @@
 	</select>
 	
 	<select id="getListAfterPaging" resultType="jmp.spring.vo.ReplyVO">
-		select * from (
+		select RNO ,BNO ,REPLY ,REPLYER ,REPLYDATE , 
+			CASE WHEN TO_CHAR(sysdate,'yyyymmdd') = TO_CHAR(updatedate,'yyyymmdd') 
+    			THEN TO_CHAR(updatedate,'am hh:mi:ss')
+    			ELSE TO_CHAR(updatedate,'yyyy/mm/dd') 
+			END UPDATEDATE
+		from (
 			SELECT ROW_NUMBER() OVER(ORDER BY a.rno asc) rn, a.* FROM tbl_reply a where bno = #{bno}
 		) 
-		
-		where rn BETWEEN ((#{cri.pageNum}-1) * #{cri.amount})+1 and #{cri.pageNum} * #{cri.amount} 
+		where rn BETWEEN ((#{cri.pageNum}-1) * #{cri.amount})+1 and #{cri.pageNum} * #{cri.amount} order by rno desc
 	</select>
 	
 </mapper>

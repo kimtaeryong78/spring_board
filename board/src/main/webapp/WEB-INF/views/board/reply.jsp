@@ -26,7 +26,7 @@
 				<div class="panel-body">
 
 
-
+				
 					<!-- 답글 -->
 					<div class='row'>
 
@@ -46,7 +46,7 @@
 								<div class="panel-body">
 
 									<ul class="chat">
-										<li class='left clearfix' data-rno='"+list.rno+"'>
+										<!-- <li class='left clearfix' data-rno='"+list.rno+"'>
 											<div>
 												<div class='header'>
 													<strong class='primary-font'>[1] 홍길동</strong> <small
@@ -54,9 +54,11 @@
 												</div>
 												<p>수고가 많으십니다!</p>
 											</div>
-										</li>
+										</li> -->
 									</ul>
-
+<label>bno</label><input type="text" id="bno" placeholder="bno" value="222"></input>
+<label>rno</label><input type="text" id="rno" placeholder="rno" value="1"></input>
+<label>pageNum</label><input type="text" id="pageNum" placeholder="pageNum" value="2"></input>
 
 
 									<!-- ./ end ul -->
@@ -96,7 +98,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Reply</h4>
+					<h4 class="modal-title" id="myModalLabel">Reply</h4>
 			</div>
 			<div class="modal-body">
 				<ul class="list-group list-group-flush">
@@ -108,8 +110,8 @@
 				</ul>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">cancle</button>
-				<button type="button" class="btn btn-primary">save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+				<button type="button" id="replyInsert" class="btn btn-primary">save</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -119,34 +121,36 @@
 <!-- /.modal -->
 
 
-
-
+<script src="/resources/js/reply.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		getList();
 		
-		function getList(){
-			$.ajax({
-				url: '../replies/pages/222/1',
-				method  : 'get',
-				dataType : 'json',
-				
-				success : function(data, textStatus, jqXHR){
-					var str = "";
-					
-					$.each(data, function(i,list){
-	 					str += "<li class='left clearfix' data-rno='"+list.rno+"'><div><div class='header'><strong class='primary-font'>[" + list.rno + "] " + list.replyer +"</strong><small class='pull-right text-muted'>"+list.updatedate +"</small></div><p>"+ list.reply+"</p></div></li>" 
-					});
-					$('.chat').append(str);
-				},
-				
-				error : function(jqXHR, textStatus, errorThrown){
-					alert(textStatus);
-					console.log("textStatus", textStatus);
-				}
-	
-			});
-		}
+		// addReply button 모달창
+		$('#addReplyBtn').on('click',function(e){
+			e.preventDefault();
+			$('#reply').html("");
+			$('#replyer').html("");
+			$('#replyInsert').show();
+			$('#myModal').modal('show');
+		});
+		
+		//insert process
+		$('#replyInsert').on('click',function(e){
+			e.preventDefault();
+			insertReply();
+		});
+		
+		$('.chat').on('click',function(e){
+			var rno = $(this).data('rno');
+			getReply(rno);
+			$('#replyInsert').hide();
+			$('#myModal').modal('show');
+		});
+		
 	});
+	
+	//
 </script>
+
 <jsp:include page="../includes/footer.jsp" />

@@ -1,12 +1,12 @@
 package jmp.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,6 @@ import jmp.spring.vo.Criteria;
 import jmp.spring.vo.ReplyVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Log4j
 @RestController
@@ -30,14 +29,17 @@ public class ReplyController {
 	ReplyService service;
 
 	@PostMapping(value = "/insert")
-	public ResponseEntity<String> create(@RequestBody ReplyVO reply){
+	public ResponseEntity<Map<String,Object>> create(@RequestBody ReplyVO reply){
 		int result = service.insertReply(reply);
-		log.info("result >>" + result + "개");
+		
+		Map<String, Object> map  = new HashMap<String, Object>();
 		
 		if( result > 0) {
-			return new ResponseEntity<String>("success", HttpStatus.OK);
+			map.put("result", "success");
+			return new ResponseEntity<Map<String,Object>>(map , HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			map.put("result", "fail");
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 		}
 	}// board list
 
@@ -67,5 +69,13 @@ public class ReplyController {
 		} else {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping("/get/{rno}")
+	public ResponseEntity<ReplyVO> get(@PathVariable("rno") String rno){
+		int t_rno = Integer.parseInt(rno);
+		ReplyVO result = service.getReply(t_rno);
+		
+		return new ResponseEntity<ReplyVO>(result,HttpStatus.OK);
 	}
 }

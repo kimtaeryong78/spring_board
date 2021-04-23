@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jmp.spring.service.ReplyService;
@@ -25,9 +26,10 @@ public class ReplyController2 {
 
 	@GetMapping("reply")
 	public void boardList(Criteria cri, Model model){
-		
-		int total = service.totalReply();
-		
 	}// board list
-
+	
+	@PostMapping("reply/")
+	public void insert() {
+		
+	}
 }
