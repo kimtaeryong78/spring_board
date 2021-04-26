@@ -14,7 +14,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Board Read</div>
 			<div class="panel-body">
-				<form action='/board/edit' method="get">
+				<form action='/board/edit' method="get" id="operForm">
 					<div class="form-group">														<!-- 보안을 위해 c:out를 애용 -->
 						<label>No.</label><input type="text" class="form-control" name="bno" id="bno" value="<c:out value='${board.bno}'/>" readonly>
 					</div>
@@ -38,74 +38,59 @@
 			</div>
 		</div>
 	</div>
-	<!-- 답글 -->
-	<div class='row'>
-
-		<div class="col-lg-12">
-
-			<!-- /.panel -->
-			<div class="panel panel-default">
-
-				<div class="panel-heading">
-					<i class="fa fa-comments fa-fw"></i> Reply
-					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New
-						Reply</button>
-				</div>
-
-
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-
-					<ul class="chat">
-						<li class='left clearfix' data-rno='"+list.rno+"'>
-							<div>
-								<div class='header'>
-									<strong class='primary-font'>[1] 홍길동</strong> <small
-										class='pull-right text-muted'>12:00:00</small>
-								</div>
-								<p>수고가 많으십니다!</p>
-							</div>
-						</li>
-					</ul>
-
-
-
-					<!-- ./ end ul -->
-				</div>
-				<!-- /.panel .chat-panel -->
-
-				<div class="panel-footer"></div>
-
-
-			</div>
-		</div>
-		<!-- ./ end row -->
-
-
-
-	</div>
 </div>
+	<script type="text/javascript" src="/resources/js/replies.js"></script>
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$('button').on(
-							'click',
-							function(e) {
-								e.preventDefault();
+		var bno_val = '<c:out value="${board.bno}"/>';
+		
+		var param = {
+			bno : bno_val,
+			page : 1
+		};
+		
+		reply.getList(param, function(list){
+			for(var i=0, len = list.length||0;i<len;i++){
+				console.log(list[i]);
+			}
+			/* list.forEach(data => console.log(data)); */
+		});
+		
+		$(document).ready(function() {
+			/* console.log(reply); */
+			console.log("======");
+			console.log("test");
+			
+			
+			/* $("#add").on("click",
+				reply.add(
+					{reply:"TEST", replyer:"tester", bno:bno_val},
+					function(result){
+						alert("RESULT : " + result);
+					}
+				)
+			);
+			 */
+			 
+			
+			
+			
+			
+			
+			
+			
+			$('button').on('click',	function(e) {
+				e.preventDefault();
 
-								var oper = $(this).data('oper');
+				var oper = $(this).data('oper');
 
-								if (oper === 'modify') {
-									$('form').attr('action', '/board/edit')
-											.submit();
-								}
-
-								else if (oper === 'list') {
-									$('form').attr('action', '/board/list')
-											.find("#bno").remove();
-									$('form').submit();
-								}
-							});
-				});
+				if (oper === 'modify') {
+					$('form').attr('action', '/board/edit').submit();
+				} else if (oper === 'list') {
+					$('form').attr('action', '/board/list').find("#bno").remove();
+					$('form').submit();
+				}
+			});
+			
+		});
 	</script>
 <%@ include file="../includes/footer.jsp"%>

@@ -62,20 +62,46 @@ public class ReplyController {
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<String> update(@RequestBody ReplyVO reply){
+	/*
+	 * update reply
+	 * front data -> json -> ReplyVO reply -> DB
+	 * @param vo
+	 * @return Map<String, String>
+	 * 
+	 */
+	public ResponseEntity<Map<String,String>> update(@RequestBody ReplyVO reply){
+		log.info("update.........");
+		
 		int result = service.updateReply(reply);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
 		if( result > 0) {
-			return new ResponseEntity<String>("success", HttpStatus.OK);
+			map.put("result", "success");
+			return new ResponseEntity<Map<String,String>>(map , HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			map.put("result", "fail");
+			return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
 		}
 	}
 	
 	@GetMapping("/get/{rno}")
-	public ResponseEntity<ReplyVO> get(@PathVariable("rno") String rno){
-		int t_rno = Integer.parseInt(rno);
-		ReplyVO result = service.getReply(t_rno);
+	public ResponseEntity<ReplyVO> get(@PathVariable("rno") int rno){
+		ReplyVO result = service.getReply(rno);
 		
 		return new ResponseEntity<ReplyVO>(result,HttpStatus.OK);
+	}
+	
+	@GetMapping("/delete/{rno}")
+	public ResponseEntity<Map<String,String>> remove(@PathVariable("rno") int rno){
+		int result = service.deleteReply(rno);
+		Map<String, String> map  = new HashMap<String, String>();
+		if( result > 0) {
+			map.put("result", "success");
+			return new ResponseEntity<Map<String,String>>(map , HttpStatus.OK);
+		} else {
+			map.put("result", "fail");
+			return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
+		}
 	}
 }
