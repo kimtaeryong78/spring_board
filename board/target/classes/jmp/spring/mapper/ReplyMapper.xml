@@ -20,7 +20,7 @@
 	    		THEN TO_CHAR(updatedate,'am hh:mi:ss')
 	    		ELSE TO_CHAR(updatedate,'yyyy/mm/dd') 
 			END UPDATEDATE
-		from tbl_reply where bno = #{bno} order BY bno ASC
+		from tbl_reply where bno = #{bno} order BY bno DESC
 	</select>
 
 	<!-- get reply by bno -->
@@ -40,7 +40,7 @@
 	
 	<!-- total reply -->	
 	<select id="totalReply" resultType="int">
-		select count(*) from tbl_reply
+		select count(*) from tbl_reply where bno = #{bno}
 	</select>
 	
 	<select id="getListAfterPaging" resultType="jmp.spring.vo.ReplyVO">
@@ -50,7 +50,7 @@
     			ELSE TO_CHAR(updatedate,'yyyy/mm/dd') 
 			END UPDATEDATE
 		from (
-			SELECT ROW_NUMBER() OVER(ORDER BY a.rno asc) rn, a.* FROM tbl_reply a where bno = #{bno}
+			SELECT ROW_NUMBER() OVER(ORDER BY a.rno desc) rn, a.* FROM tbl_reply a where bno = #{bno}
 		) 
 		where rn BETWEEN ((#{cri.pageNum}-1) * #{cri.amount})+1 and #{cri.pageNum} * #{cri.amount} order by rno desc
 	</select>

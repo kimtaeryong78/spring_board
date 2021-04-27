@@ -42,8 +42,8 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public int totalReply() {
-		return rm.totalReply();
+	public int totalReply(int bno) {
+		return rm.totalReply(bno);
 	}
 	
 	@Override

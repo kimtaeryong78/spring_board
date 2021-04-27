@@ -29,17 +29,17 @@ public class ReplyController {
 	ReplyService service;
 
 	@PostMapping(value = "/insert")
-	public ResponseEntity<Map<String,Object>> create(@RequestBody ReplyVO reply){
+	public ResponseEntity<Map<String,String>> create(@RequestBody ReplyVO reply){
 		int result = service.insertReply(reply);
 		
-		Map<String, Object> map  = new HashMap<String, Object>();
+		Map<String, String> map  = new HashMap<>();
 		
 		if( result > 0) {
 			map.put("result", "success");
-			return new ResponseEntity<Map<String,Object>>(map , HttpStatus.OK);
+			return new ResponseEntity<Map<String,String>>(map , HttpStatus.OK);
 		} else {
 			map.put("result", "fail");
-			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+			return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
 		}
 	}// board list
 

@@ -19,7 +19,7 @@ public interface ReplyMapper {
 
 	public int deleteReply(int rno); // delete reply by bno
 	
-	public int totalReply();		//total reply
+	public int totalReply(int bno);		//total reply
 	
 	public List<ReplyVO> getListAfterPaging(@Param("cri") Criteria cri, @Param("bno") int bno);
 	//reply after paging precess

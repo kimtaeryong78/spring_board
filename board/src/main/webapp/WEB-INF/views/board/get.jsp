@@ -8,14 +8,14 @@
 		<h1 class="page-header">Board Read</h1>
 	</div>
 </div>
-
+<!-- board -->
 <div class="row">
-	<div class="col-lg 12">
+	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">Board Read</div>
 			<div class="panel-body">
 				<form action='/board/edit' method="get" id="operForm">
-					<div class="form-group">														<!-- 보안을 위해 c:out를 애용 -->
+					<div class="form-group">													<!-- 보안을 위해 c:out를 애용 -->
 						<label>No.</label><input type="text" class="form-control" name="bno" id="bno" value="<c:out value='${board.bno}'/>" readonly>
 					</div>
 					<div class="form-group">
@@ -39,58 +39,165 @@
 		</div>
 	</div>
 </div>
-	<script type="text/javascript" src="/resources/js/replies.js"></script>
-	<script type="text/javascript">
-		var bno_val = '<c:out value="${board.bno}"/>';
-		
-		var param = {
+<!-- reply -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-comments fa-fw"></i> Reply
+				 <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
+				 </div>
+			<div class="panel-body">
+				<ul class="chat" data-replyPageNum="1">
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 모달 Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+				<h4 class="modal-title" id="myModalLabel">Reply</h4>
+			</div>
+			<div class="modal-body">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<input type="text" class="form-control ml-2" placeholder="replyer" id="replyer">
+					</li>
+					<li class="list-group-item">
+						<textarea class="form-control" id="reply_content" placeholder="reply" rows="3"></textarea>
+					</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" data-dismiss="modal" id="modify">Modify</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" id="remove">Remove</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+				<button type="button" class="btn btn-primary" id="replyInsertBtn">save</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- <!-- jquery reply --> -->
+
+<!-- js module -->
+<script type="text/javascript" src="/resources/js/replies.js"></script>
+
+<!-- front -->
+<script type="text/javascript">
+
+$(document).ready(function() {
+	console.log("======");
+	console.log("reply test.........");
+	
+	
+	var bno_val = <c:out value="${board.bno}"/>;
+	var replyPageNum = $('.chat').data("replyPageNum");
+	
+	viewList(replyPageNum);
+	
+	function viewList(pn){
+		replyModule.getList({bno:bno_val,page:pn},function(list){
+			$('.chat').html("");
+			console.log(list);
+			list.forEach(data => $('.chat').append(replyModule.replyForm(data)));
+		});
+	};
+	//show add form
+	$("#addReplyBtn").on('click',function(e){
+		$('#replyer').val("");
+		$('#reply_content').val("");
+		$('#replyInsertBtn').show();
+		$('#modify, #remove').hide();
+		$('#myModal').modal("show");
+	});
+	//add processing
+	$('#replyInsertBtn').on('click',function(e){
+		var temp = {
 			bno : bno_val,
-			page : 1
+			reply : $('#reply_content').val(),
+			replyer : $('#replyer').val(),
+		};
+		console.log(temp);
+		
+		replyModule.add(temp, function(answer){
+			if(answer == 'success'){
+				viewList(replyPageNum);
+				alert("success");
+				$('#myModal').modal("hide");
+			} else {
+				alert("error");
+			}
+		});
+	});
+	//get detail
+	$(".chat").on('click','li',function(e){
+		var rno = $(this).data('rno');
+		replyModule.get(rno,function(data){
+			$('#replyer').val(data.replyer);
+			$('#reply_content').val(data.reply);
+			$('#modify, #remove').show();
+			$('#replyInsertBtn').hide();
+			$('#myModal').data('rno',rno).modal("show");
+		});
+	});
+	//update
+	$('#modify').on('click',function(e){
+		var temp = {
+			rno : $('#myModal').data('rno'),
+			reply : $('#reply_content').val(),
+			replyer : $('#replyer').val(),
 		};
 		
-		reply.getList(param, function(list){
-			for(var i=0, len = list.length||0;i<len;i++){
-				console.log(list[i]);
+		replyModule.update(temp,function(answer){
+			console.log(answer.result);
+			
+			if(answer.result == 'success'){
+				viewList(replyPageNum);
+				alert("success");
+				$('#myModal').modal("hide");
+			} else {
+				alert("error");
 			}
-			/* list.forEach(data => console.log(data)); */
 		});
+	});
+	//delete
+	$('#remove').on('click',function(e){
+		var rno = $('#myModal').data('rno');
 		
-		$(document).ready(function() {
-			/* console.log(reply); */
-			console.log("======");
-			console.log("test");
-			
-			
-			/* $("#add").on("click",
-				reply.add(
-					{reply:"TEST", replyer:"tester", bno:bno_val},
-					function(result){
-						alert("RESULT : " + result);
-					}
-				)
-			);
-			 */
-			 
-			
-			
-			
-			
-			
-			
-			
-			$('button').on('click',	function(e) {
-				e.preventDefault();
-
-				var oper = $(this).data('oper');
-
-				if (oper === 'modify') {
-					$('form').attr('action', '/board/edit').submit();
-				} else if (oper === 'list') {
-					$('form').attr('action', '/board/list').find("#bno").remove();
-					$('form').submit();
-				}
-			});
-			
+		replyModule.remove(rno, function(answer) {
+			if(answer.result == 'success'){
+				viewList(replyPageNum);
+				alert("success");
+				$('#myModal').modal("hide");
+			} else {
+				alert("error");
+			}	
 		});
-	</script>
+	});
+	
+	//submit processing
+	$('button').on('click',	function(e) {
+		e.preventDefault();
+
+		var oper = $(this).data('oper');
+
+		if (oper === 'modify') {
+			$('form').attr('action', '/board/edit').submit();
+		} else if (oper === 'list') {
+			$('form').attr('action', '/board/list').find("#bno").remove();
+			$('form').submit();
+		}
+	});
+	 
+});
+</script>
+	
 <%@ include file="../includes/footer.jsp"%>

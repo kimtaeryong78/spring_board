@@ -4,9 +4,8 @@
  
  console.log("Reply........");
  
- var reply = (function(){
- 	
- 	function add(replyData, callback){
+ var replyModule = {
+ 	add : function(replyData, callback){
  		console.log("reply add.......");
  		
  		$.ajax({
@@ -21,24 +20,19 @@
 				if(callback){
 					callback(res.result);
 				}
-			},
-			
-			error : function(errorThrown){
-				if(error){
-					error(errorThrown);
-				}
 			}
  		});
- 	}//add
+ 	},// add
  	
- 	function getList(param, callback, error){
-		 
+ 	getList: function(param, callback){
+ 		console.log("get list...........");
+ 		
  		var bno = param.bno;
 		var page = param.page || 1;
 
 		$.ajax({
 		
-			url : "/replies/pages/" + bno + "/" + page + ".json",
+			url : "/replies/pages/" + bno + "/" + page,
 			method : 'get',
 			dataType : 'json',
 			
@@ -48,21 +42,62 @@
 				if(callback){
 					callback(data);
 				}
-			},
-			
-			error : function(xhr,status,err){
-				if(error){
-					error();
-				}
 			}
 		});
- 	}//getList
+ 	},// getList
  	
+ 	remove: function(rno, callback){
+ 		console.log("remove...........");
+ 		
+ 		$.ajax({
+ 			url : "/replies/delete/" + rno,
+ 			method : 'get',
+ 			dataType : 'json',	
+ 			
+ 			success : function(result){
+ 				if(callback){
+ 					callback(result);
+ 				}
+ 			}
+ 		});
+ 	},//remove
  	
+ 	update : function(reply, callback){
+ 		console.log("update...........");
+ 		
+ 		$.ajax({
+ 			url: '/replies/update/',
+ 			method: 'post',
+ 			dataType: 'json',
+
+ 			data: JSON.stringify(reply),
+ 			contentType: 'application/json; charset=utf-8',
+ 			
+ 			success: function(result,staus){
+ 				if(callback){
+ 					callback(result);
+ 				}
+ 			}
+ 		});
+ 	},//update
  	
+ 	get : function(rno, callback){
+ 		console.log("get..............");
+ 		
+ 		$.ajax({
+ 			url: '/replies/get/'+rno,
+ 			method: 'get',
+ 			dataType: 'json',
+ 			
+ 			success : function(data){
+ 				if(callback){
+ 					callback(data);
+ 				}
+ 			}
+ 		});
+ 	},//get
  	
- 	return {
- 		add : add,
-		get : getList
- 	};
- })();
+ 	replyForm : function(list){
+ 		return '<li class="left clearfix" data-rno="'+ list.rno +'"><div><div class="header"><strong class="primary-font">['+list.rno+']&nbsp'+ list.replyer +'</strong><small class="pull-right text-muted">' + list.updatedate + '</small></div><p id="reply">'+ list.reply +'</p></div></li>';
+ 	}
+};

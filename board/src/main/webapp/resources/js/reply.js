@@ -4,7 +4,7 @@
 function getAjaxList(){
 	
 	$.ajax({
-		url : '/replies/pages/' + $("#bno").val() + "/1",
+		url : '/replies/pages/' + $("#bno").val() + "/" + $("#replyPageNo").val()||1,
 		method : 'get',
 		dataType : 'json',
 		

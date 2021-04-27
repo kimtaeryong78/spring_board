@@ -56,7 +56,7 @@ public class ReplyTests {
 	
 	@Test
 	public void test5() {
-		log.info(rm.totalReply());
+		log.info(rm.totalReply(222));
 	}
 	
 	@Test
