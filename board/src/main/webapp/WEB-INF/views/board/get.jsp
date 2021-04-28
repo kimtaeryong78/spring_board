@@ -48,8 +48,10 @@
 				 <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
 				 </div>
 			<div class="panel-body">
-				<ul class="chat" data-replyPageNum="1">
+				<ul class="chat" data-replypn="1">
 				</ul>
+				<div class="pull-right" id="replyPage">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -85,7 +87,7 @@
 </div>
 <!-- /.modal -->
 
-<!-- <!-- jquery reply --> -->
+<!-- <!-- jquery reply -->
 
 <!-- js module -->
 <script type="text/javascript" src="/resources/js/replies.js"></script>
@@ -94,22 +96,45 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	console.log("======");
-	console.log("reply test.........");
-	
-	
 	var bno_val = <c:out value="${board.bno}"/>;
-	var replyPageNum = $('.chat').data("replyPageNum");
-	
+	var replyPageNum = $('.chat').data("replypn");
 	viewList(replyPageNum);
 	
 	function viewList(pn){
+		
 		replyModule.getList({bno:bno_val,page:pn},function(list){
+			var temp = list['list'];
 			$('.chat').html("");
-			console.log(list);
-			list.forEach(data => $('.chat').append(replyModule.replyForm(data)));
+			temp.forEach(data => $('.chat').append(replyModule.replyForm(data)));
+			$('#replyPage').html(function(){
+				var page = list['page'];
+				var str = '<nav aria-label="Page navigation example"><ul class="pagination">';
+				if(page.prev){
+					str += '<li class="page-item" hidden="hidden"><a class="page-link" data-page="1"><<</a></li>';
+					str += '<li class="page-item" hidden="hidden"><a class="page-link" data-page="'+ (page.start-1) +'"><</a></li>'; 
+				}
+				for(var i=page.start; i<=page.end; i++){
+					str += '<li class="page-item';
+					if(i == pn)	str += ' active';
+					str += '"><a class="page-link" data-page="'+ i +'">'+ i +'</a></li>'; 					
+				}
+				if(page.next){
+					str += '<li class="page-item"><a class="page-link" data-page="'+ (page.end+1) +'">></a></li>';
+					str += '<li class="page-item"><a class="page-link" data-page="'+ page.realEnd +'">>></a></li>';
+				}	
+				str += '</ul></nav>';
+				return str;
+			})
 		});
 	};
+	//page nav click process
+	$('#replyPage').on('click','li a',function(e){
+		e.preventDefault();
+		console.log("click");
+		var temp = $(this).data("page");
+		var replyPageNum = $('.chat').data("replypn",temp);
+		viewList(temp);
+	});
 	//show add form
 	$("#addReplyBtn").on('click',function(e){
 		$('#replyer').val("");
@@ -125,7 +150,6 @@ $(document).ready(function() {
 			reply : $('#reply_content').val(),
 			replyer : $('#replyer').val(),
 		};
-		console.log(temp);
 		
 		replyModule.add(temp, function(answer){
 			if(answer == 'success'){
@@ -157,8 +181,6 @@ $(document).ready(function() {
 		};
 		
 		replyModule.update(temp,function(answer){
-			console.log(answer.result);
-			
 			if(answer.result == 'success'){
 				viewList(replyPageNum);
 				alert("success");

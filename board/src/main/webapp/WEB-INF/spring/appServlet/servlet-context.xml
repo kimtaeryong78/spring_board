@@ -27,5 +27,5 @@
 	<context:component-scan base-package="jmp.spring.exception" />
 
 	<!-- resource -->
-	<resources location="/resources/" mapping="/resources/*"/>
+	<resources location="/resources/" mapping="/resources/**"/>
 </beans:beans>

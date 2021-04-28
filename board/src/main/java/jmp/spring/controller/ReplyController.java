@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jmp.spring.service.ReplyService;
 import jmp.spring.vo.Criteria;
+import jmp.spring.vo.Page;
 import jmp.spring.vo.ReplyVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -44,10 +45,14 @@ public class ReplyController {
 	}// board list
 
 	@GetMapping("/pages/{bno}/{pageNum}")
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("bno") int bno,@PathVariable("pageNum") int pageNum) {
+	public ResponseEntity<Map<String,Object>> getList(@PathVariable("bno") int bno,@PathVariable("pageNum") int pageNum) {
 		Criteria cri = new Criteria(pageNum, 10);
+		Page page = new Page(service.totalReply(bno), cri);
 		List<ReplyVO> list = service.getListAfterPaging(cri, bno);
-		return new ResponseEntity<List<ReplyVO>>(list,HttpStatus.OK);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("page", page);
+		map.put("list", list);
+		return new ResponseEntity<>(map,HttpStatus.OK);
 	}
 	
 	@PostMapping("/delete/{rno}")
