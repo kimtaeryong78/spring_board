@@ -19,4 +19,6 @@ public interface BoardMapper {
 	public int updateBoard(BoardVO board);		//update board
 	
 	public int deleteBoard(int bno);			//delete board by bno
+	
+	public void backup(int bno);
 }

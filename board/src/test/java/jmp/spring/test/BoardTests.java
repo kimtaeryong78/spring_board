@@ -63,4 +63,9 @@ public class BoardTests {
 		
 		list.forEach(board -> log.info(board));
 	}
+	
+	@Test
+	public void test6() {
+		bm.backup(1122);
+	}
 }

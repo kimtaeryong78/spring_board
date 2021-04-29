@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jmp.spring.mapper.ReplyMapper;
 import jmp.spring.vo.Criteria;
@@ -16,9 +17,13 @@ public class ReplyServiceImpl implements ReplyService{
 	@Setter(onMethod_ = @Autowired)
 	ReplyMapper rm;
 	
+	@Transactional
 	@Override
 	public int insertReply(ReplyVO reply) {
-		return rm.insertReply(reply);
+		int res = rm.insertReply(reply);
+		
+		rm.updateReplyCnt(reply.getBno());
+		return res;
 	}
 
 	@Override
@@ -33,12 +38,18 @@ public class ReplyServiceImpl implements ReplyService{
 
 	@Override
 	public int updateReply(ReplyVO reply) {
+		rm.updateReplyCnt(reply.getBno());
 		return rm.updateReply(reply);
 	}
 
 	@Override
 	public int deleteReply(int rno) {
-		return rm.deleteReply(rno);
+		ReplyVO reply = rm.getReply(rno);
+		
+		int res = rm.deleteReply(rno);
+		
+		rm.updateReplyCnt(reply.getBno());
+		return res;
 	}
 
 	@Override

@@ -20,6 +20,6 @@ public interface ReplyService {
 	
 	public int totalReply(int bno);	//total reply
 	
-	public List<ReplyVO> getListAfterPaging(@Param("cri") Criteria cri, @Param("bno") int bno);
-	//reply after paging precess
+	public List<ReplyVO> getListAfterPaging(@Param("cri") Criteria cri, @Param("bno") int bno);	//reply after paging precess
+	
 }

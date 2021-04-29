@@ -16,4 +16,5 @@ public class BoardVO {
 	/*Date */ String regdate;			//board regist date
 	/* @DateTimeFormat(pattern = "yy/MM/dd") */
 	/*Date*/ String updatedate;		//board update date
+	int replycnt;
 }

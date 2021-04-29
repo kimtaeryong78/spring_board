@@ -58,6 +58,7 @@ public class ReplyController {
 	@PostMapping("/delete/{rno}")
 	public ResponseEntity<String> delete(@PathVariable("rno") int rno){
 		int result = service.deleteReply(rno);
+		
 		log.info("result >>" + result + "개");
 		if( result > 0) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);

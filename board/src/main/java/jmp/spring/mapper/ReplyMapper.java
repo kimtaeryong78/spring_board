@@ -21,6 +21,9 @@ public interface ReplyMapper {
 	
 	public int totalReply(int bno);		//total reply
 	
-	public List<ReplyVO> getListAfterPaging(@Param("cri") Criteria cri, @Param("bno") int bno);
-	//reply after paging precess
+	public List<ReplyVO> getListAfterPaging(@Param("cri") Criteria cri, @Param("bno") int bno); //reply after paging precess
+	
+	public int getBno(int rno);	//get bno by rno
+	
+	public int updateReplyCnt(int bno);
 }

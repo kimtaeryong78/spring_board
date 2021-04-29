@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jmp.spring.mapper.BoardMapper;
 import jmp.spring.vo.BoardVO;
@@ -42,7 +43,9 @@ public class BoardServiceImpl implements BoardService{
 	}//get board by bno
 
 	@Override
+	@Transactional
 	public int updateBoard(BoardVO board) {
+		bm.backup(board.getBno());
 		return bm.updateBoard(board);
 	}//update board
 

@@ -68,4 +68,9 @@ public class ReplyTests {
 	public void test7() {
 		rm.getListAfterPaging(new Criteria(), 222);
 	}
+	
+	@Test
+	public void test8() {
+		rm.updateReplyCnt(222);
+	}
 }
