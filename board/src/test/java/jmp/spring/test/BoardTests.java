@@ -66,6 +66,6 @@ public class BoardTests {
 	
 	@Test
 	public void test6() {
-		bm.backup(1122);
+		bm.backup(1123);
 	}
 }
