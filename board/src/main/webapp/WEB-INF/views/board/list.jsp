@@ -29,7 +29,7 @@
 					<c:forEach items="${list}" var="board">
 						<tr class="getBoard">
 							<td>${board.bno}</td>
-							<td>${board.title}&nbsp;[<c:choose><c:when test="${board.replycnt}==null">0</c:when><c:otherwise>${board.replycnt}</c:otherwise></c:choose>]</td>
+							<td>${board.title}&nbsp;[${board.replycnt}]</td>
 							<td>${board.writer}</td>
 							<td>${board.regdate}</td>
 							<td>${board.updatedate}</td>

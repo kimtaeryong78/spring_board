@@ -25,6 +25,11 @@ public class ServiceTests {
 	}
 	
 	@Test
+	public void get() {
+		service.getBoard(1058);
+	}
+	
+	@Test
 	public void insert() {
 		BoardVO board = new BoardVO();
 		board.setTitle("test");
@@ -42,13 +47,19 @@ public class ServiceTests {
 	@Test
 	public void modify() {
 		
-		BoardVO board = service.getBoard(38);
+		BoardVO board = service.getBoard(1058);
 		
 		board.setContent("test eclipse");
 		board.setTitle("titletitle");
 		
 		log.info("modify=================================" + service.updateBoard(board));
+	}
+	@Test
+	public void modifyTx() {
+		BoardVO board = service.getBoard(1058);
+		board.setContent("test eclipse tx");
+		board.setTitle("titletitle tx");
 		
-		
+		log.info("modify=================================" + service.updateBoard(board));
 	}
 }
