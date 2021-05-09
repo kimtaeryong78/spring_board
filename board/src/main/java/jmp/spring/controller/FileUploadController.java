@@ -30,48 +30,41 @@ public class FileUploadController {
 	@GetMapping("/uploadFormAction")
 	public void uploadForm() {}	//form
 	
-	@PostMapping("/uploadFormAction")
-	  public void uploadFormPost(MultipartFile[] uploadFile, int attachNo) {
-		
-		//new page -> attachNo;seq.nextval
-		if(attachNo == 0) {
-			attachNo = service.sequence();
-		}
-		
-		
-		for (MultipartFile multipartFile : uploadFile) {
-			log.info("-------------------------------------");
-			log.info("Upload File Name: " +multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " +multipartFile.getSize());
-			log.info("Upload File Size: " +multipartFile.getName());
-			log.info("-------------------------------------");
-			
-			String uploadPath = getFolder();
-			log.debug("============================="+uploadPath);
-			
-			UUID uuid = UUID.randomUUID();//create uuid(unique)
-			String uploadFileName = uuid.toString() + "_" + multipartFile.getOriginalFilename();
-			log.debug("============================================"+uploadFileName);
-			
-			//save file
-			File saveFile = new File(ROOT_DIR+uploadPath,uploadFileName);
-
-			try {
-				multipartFile.transferTo(saveFile);
-				//search file type
-				String contentType = Files.probeContentType(saveFile.toPath());
-				
-				if(contentType.startsWith("image")) {
-					// create thumbnail
-					String thumbnailPath = ROOT_DIR+uploadPath + "s_"+ uploadFileName;
-					Thumbnails.of(saveFile).size(100,100).toFile(thumbnailPath);
-				}
-				
-			} catch (Exception e) {log.error(e.getMessage());}
-			
-		}
-	}//upload process
-	
+	/*
+	 * @PostMapping("/uploadFormAction") public void uploadFormPost(MultipartFile[]
+	 * uploadFile, int attachNo) {
+	 * 
+	 * //new page -> attachNo;seq.nextval if(attachNo == 0) { attachNo =
+	 * service.sequence(); }
+	 * 
+	 * 
+	 * for (MultipartFile multipartFile : uploadFile) {
+	 * log.info("-------------------------------------");
+	 * log.info("Upload File Name: " +multipartFile.getOriginalFilename());
+	 * log.info("Upload File Size: " +multipartFile.getSize());
+	 * log.info("Upload File Size: " +multipartFile.getName());
+	 * log.info("-------------------------------------");
+	 * 
+	 * String uploadPath = getFolder();
+	 * log.debug("============================="+uploadPath);
+	 * 
+	 * UUID uuid = UUID.randomUUID();//create uuid(unique) String uploadFileName =
+	 * uuid.toString() + "_" + multipartFile.getOriginalFilename();
+	 * log.debug("============================================"+uploadFileName);
+	 * 
+	 * //save file File saveFile = new File(ROOT_DIR+uploadPath,uploadFileName);
+	 * 
+	 * try { multipartFile.transferTo(saveFile); //search file type String
+	 * contentType = Files.probeContentType(saveFile.toPath());
+	 * 
+	 * if(contentType.startsWith("image")) { // create thumbnail String
+	 * thumbnailPath = ROOT_DIR+uploadPath + "s_"+ uploadFileName;
+	 * Thumbnails.of(saveFile).size(100,100).toFile(thumbnailPath); }
+	 * 
+	 * } catch (Exception e) {log.error(e.getMessage());}
+	 * 
+	 * } }//upload process
+	 */	
 	/**
 	 * 중복 방지용
 	 * 업로드 날짜를 업로드 경로로 지정

@@ -157,7 +157,7 @@ public class AjaxFileUploadController {
 		if(result>0) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("fail",HttpStatus.OK);
 		}
 	}
 	

@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="col-lg 12">
 		<div class="panel panel-default">
-
+			<!-- 여기다 attach -->
 			<div class="panel-heading">Board Read</div>
 			<div class="panel-body">
 				<form action="/board/edit" method="post">
@@ -33,6 +33,7 @@
 					<input type="hidden" name="amount" value="<c:out value='${criteria.amount}'/>">
 					<input type="hidden" name="type" value="<c:out value='${criteria.type}'/>">
 					<input type="hidden" name="word" value="<c:out value='${criteria.word}'/>">
+					
 					<button type="submit" data-oper="modify" class="btn btn-default">Modify</button>
 					<button data-oper="delete" class="btn btn-danger" <%-- onclick="location.href='/board/delete?bno=<c:out value="${board.bno}"/>'" --%> >Remove</button>
 					<button data-oper="list" class="btn btn-info">List</button>

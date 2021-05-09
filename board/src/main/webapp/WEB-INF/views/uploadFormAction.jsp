@@ -29,21 +29,26 @@
 </style>
 </head>
 <body>
-	<form action="uploadFormAction" method="post"
-		enctype="multipart/form-data" name="fileUploadForm">
-		<input type="text" id="attachNo" name="attachNo" value="68" hidden="hidden">
+	<!-- method="post" -->
+	<form action="uploadFormAction" enctype="multipart/form-data" name="fileUploadForm">
+		<input type="text" id="attachNo" name="attachNo" value="0">
 		<input type='file' name='uploadFile' multiple>
 		<!-- <button>Submit</button> -->
 		<button type="button" id="uploadBtn">ajax</button>
 	</form>
 	<div class="uploadResult">
 		<ul id="fileList">
+		
 		</ul>
 	</div>
 </body>
+
+<!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- script module -->
 <script type="text/javascript">
-function getList(attachNo){
+function attachGetList(attachNo){
 	var str_fileListContent = "";
 	
 	$.ajax({
@@ -54,8 +59,9 @@ function getList(attachNo){
       	success: function(result){	//result : list<attachfilevo>
       		$.each(result, function (index, vo){
       			var savePath = encodeURIComponent(vo.savePath);
+	      		var s_savePath= encodeURIComponent(vo.s_savePath);
+	      		
       			if(vo.fileType =='Y'){
-	      			var s_savePath= encodeURIComponent(vo.s_savePath);
 	      			
 	      			str_fileListContent +="<li><img src='/display?fileName=" + s_savePath +"'><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";		
       			} else {
@@ -67,11 +73,29 @@ function getList(attachNo){
 	}); 
 }//getList
 
+function attachDelete(uuid,attachNo){
+		
+	$.ajax({
+		url : '/attachDelete/'+uuid+"/"+attachNo,
+		method : 'get',
+		
+		success : function(str){
+			console.log(str);
+			attachGetList(attachNo);
+		},
+		error : function(error){
+			console.log("error");
+		}
+	});
+}//delete
+</script>
+
+<script type="text/javascript">
 $(document).ready(function(){
 	var attachNo = $("#attachNo").val();
 	var str_fileListContent = "";
 	
-	getList(attachNo);
+	attachGetList(attachNo);
 
 	$("#uploadBtn").on("click", function(e){
 		
@@ -89,13 +113,15 @@ $(document).ready(function(){
 	      		$.each(result, function (index, vo){
 	      			var attachNo = vo.attachNo;
 	      			console.log(vo.attachNo);
+	      			var s_savePath= encodeURIComponent(vo.s_savePath);
 	      			var savePath= encodeURIComponent(vo.savePath);
 	      			if(vo.fileType =='Y'){
-	      			str_fileListContent +="<li><img src='/display?fileName=" + s_savePath +"'><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";		
+	      				str_fileListContent +="<li><img src='/display?fileName=" + s_savePath +"'><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";		
 	      			} else {
 		      			str_fileListContent += "<li><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";
 	      			}
 				$("#attachNo").val(attachNo);
+				attachGetList(attachNo);
 	      		});
 			$("#fileList").html(str_fileListContent);
 	      	}
@@ -103,20 +129,5 @@ $(document).ready(function(){
 	});//onclick
 });//jquery
 
-function attachDelete(uuid,attachNo){
-	$.ajax({
-		url : '/attachDelete/'+uuid+"/"+attachNo,
-		type : 'get',
-		
-		success : function(str){
-			alert(str);
-			getList(attachNo);
-		},
-		error : function(error){
-			console.log(error);
-		}
-	});
-	
-}
 </script>
 </html>

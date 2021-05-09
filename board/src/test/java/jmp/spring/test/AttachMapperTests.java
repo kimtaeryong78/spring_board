@@ -53,7 +53,7 @@ public class AttachMapperTests {
 	
 	@Test
 	public void test5() {
-		log.error(service.getList(7));
+		log.error(service.getList(1));
 	}
 	
 	@Test
@@ -66,7 +66,6 @@ public class AttachMapperTests {
 		vo.setUuid("4");
 		log.info(service.insert(vo));
 	}
-	
 	@Test
 	public void test7() {
 		am.deleteAttach("01cdac2e-0616-46ce-9ac4-1b5d4189f294", 68);
@@ -75,5 +74,15 @@ public class AttachMapperTests {
 	@Test
 	public void test8() {
 		service.delete("2b0bb0c5-c154-40e8-be3c-6fc358f7d770", 68);
+	}
+	
+	@Test
+	public void test9() {
+		service.get("uuid", 1);
+	}
+	
+	@Test
+	public void test10() {
+		am.getFile("uuid", 1);
 	}
 }

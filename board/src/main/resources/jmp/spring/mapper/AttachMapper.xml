@@ -6,7 +6,7 @@
 	<select id="getSeq" resultType="int">
 		select seq_attach.nextval from dual
 	</select>
-	<select id="getFile" resultType="int">
+	<select id="getFile" resultType="jmp.spring.vo.AttachFileVO">
 		select ATTACHNO, UUID, UPLOADPATH, FILENAME,FILETYPE, UPLOADPATH||UUID||'_'||FILENAME SAVEPATH, UPLOADPATH||'s_'||UUID||'_'||FILENAME S_SAVEPATH FROM TBL_ATTACH WHERE ATTACHNO=#{attachNo} and UUID=#{uuid}
 	</select>
 	<insert id="insertAttach">
