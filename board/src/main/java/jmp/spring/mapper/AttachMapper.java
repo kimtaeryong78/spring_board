@@ -17,4 +17,6 @@ public interface AttachMapper {
 	
 	public int deleteAttach(@Param("uuid") String uuid, @Param("attachNo") int attachNo);
 	
+	public int deleteAllAttach(int attachNo);
+	
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jmp.spring.mapper.UserMapper">
+	<select id="getUserList" resultType="jmp.spring.vo.UserVO">
+		select ID,PWD,ENABLED,NAME,EMAIL from users
+	</select>
+	<select id="getUser" resultType="jmp.spring.vo.UserVO">
+		select * from users where id=#{id} and pwd=#{pwd}
+	</select>
+	<insert id="addUser">
+		insert into users (ID,PWD,ENABLED,NAME,EMAIL) values (#{id}, #{pwd}, 1, #{name}, #{email})
+	</insert>
+</mapper>

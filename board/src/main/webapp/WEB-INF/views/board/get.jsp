@@ -28,6 +28,11 @@
 					<div class="form-group">
 						<label>Writer</label><input type="text" class="form-control" name="writer" value="<c:out value='${board.writer}'/>" readonly>
 					</div>
+					<div class="uploadResult">
+						<ul id="fileList">
+		
+						</ul>
+					</div>
 					<input type="hidden" name="pageNum" value="<c:out value='${criteria.pageNum}'/>">
 					<input type="hidden" name="amount" value="<c:out value='${criteria.amount}'/>">
 					<input type="hidden" name="type" value="<c:out value='${criteria.type}'/>">
@@ -94,11 +99,38 @@
 
 <!-- front -->
 <script type="text/javascript">
+function attachGetList(attachNo){
+	var str_fileListContent = "";
+	
+	$.ajax({
+    	url: '/getList/'+attachNo,
+    	method: 'get',
+      	dataType:'json',
+      	
+      	success: function(result){	//result : list<attachfilevo>
+      		$.each(result, function (index, vo){
+      			var savePath = encodeURIComponent(vo.savePath);
+	      		var s_savePath= encodeURIComponent(vo.s_savePath);
+	      		
+      			if(vo.fileType =='Y'){
+	      			str_fileListContent +="<li><a href='/download?fileName="+ savePath + "'><img src='/display?fileName=" + s_savePath +"'></a></li>";		
+      			} else {
+	      			str_fileListContent += "<li><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a></li>";
+      			}
+      		});
+		$("#fileList").html(str_fileListContent);
+      	}
+	}); 
+}//getList
+
 
 $(document).ready(function() {
 	var bno_val = <c:out value="${board.bno}"/>;
 	var replyPageNum = $('.chat').data("replypn");
 	viewList(replyPageNum);
+	
+	var attachNo = <c:out value="${board.attachNo}"/>;
+	attachGetList(attachNo);
 	
 	function viewList(pn){
 		

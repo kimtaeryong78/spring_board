@@ -12,7 +12,6 @@
 <div class="row">
 	<div class="col-lg 12">
 		<div class="panel panel-default">
-			<!-- 여기다 attach -->
 			<div class="panel-heading">Board Read</div>
 			<div class="panel-body">
 				<form action="/board/edit" method="post">
@@ -29,30 +28,23 @@
 					<div class="form-group">
 						<label>Writer</label><input type="text" class="form-control" name="writer" value='<c:out value="${board.writer}"/>' readonly>
 					</div>
+					<div class="uploadResult">
+						<ul id="fileList">
+						</ul>
+					</div>
+					<input type="text" id="attachNo" name="attachNo" value="<c:out value="${board.attachNo}"/>" hidden="hidden">
 					<input type="hidden" name="pageNum" value="<c:out value='${criteria.pageNum}'/>">
 					<input type="hidden" name="amount" value="<c:out value='${criteria.amount}'/>">
 					<input type="hidden" name="type" value="<c:out value='${criteria.type}'/>">
 					<input type="hidden" name="word" value="<c:out value='${criteria.word}'/>">
-					
 					<button type="submit" data-oper="modify" class="btn btn-default">Modify</button>
 					<button data-oper="delete" class="btn btn-danger" <%-- onclick="location.href='/board/delete?bno=<c:out value="${board.bno}"/>'" --%> >Remove</button>
 					<button data-oper="list" class="btn btn-info">List</button>
 				</form>
+				<jsp:include page="../uploadFormAction.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('button').on('click',function(e){
-		e.preventDefault();
-		var oper = $(this).data('oper');
-		if(oper === 'remove')		$('form').attr('action','/board/delete');
-		else if(oper === 'list')	{
-			$('form').attr('action','/board/list').attr('method','get'); 
-		}
-		$('form').submit();
-	});
-});
-</script>
+
 <%@ include file="../includes/footer.jsp"%>

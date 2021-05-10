@@ -18,4 +18,7 @@
 	<delete id="deleteAttach">
 		DELETE FROM TBL_ATTACH WHERE ATTACHNO=#{attachNo} and UUID=#{uuid}
 	</delete>
+	<delete id="deleteAllAttach">
+		DELETE FROM TBL_ATTACH WHERE ATTACHNO=#{attachNo}
+	</delete>
 </mapper>

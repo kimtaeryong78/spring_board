@@ -39,4 +39,9 @@ public class AttachServiceImpl implements AttachService{
 	public AttachFileVO get(String uuid, int attachNo) {
 		return am.getFile(uuid, attachNo);
 	}
+	
+	@Override
+	public int allDelete(int attachNo) {
+		return am.deleteAllAttach(attachNo);
+	}
 }

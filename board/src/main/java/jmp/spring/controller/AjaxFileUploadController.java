@@ -138,6 +138,34 @@ public class AjaxFileUploadController {
 		}
 	}//image loading
 	
+	@GetMapping("attachDelete/{attachNo}")
+	public ResponseEntity<String> allDelete(@PathVariable int attachNo){
+		List<AttachFileVO> list = service.getList(attachNo);
+		for (AttachFileVO vo : list) {
+			String pathname = ROOT_DIR+vo.getSavePath();
+			String s_pathname = ROOT_DIR+vo.getS_savePath();
+			File file = new File(pathname);
+			if(file.exists()) {
+				file.delete();
+				
+				if(vo.getFileType().equals("Y")) {
+					file = new File(s_pathname);
+					file.delete();
+				}
+			}
+		}
+		int result = service.allDelete(attachNo);
+		
+		if(result>0) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("fail",HttpStatus.OK);
+		}
+	}
+	
+	
+	
+	
 	@GetMapping("/attachDelete/{uuid}/{attachNo}")
 	public ResponseEntity<String> delete(@PathVariable("uuid") String uuid, @PathVariable("attachNo") int attachNo) {
 		AttachFileVO vo = service.get(uuid, attachNo);

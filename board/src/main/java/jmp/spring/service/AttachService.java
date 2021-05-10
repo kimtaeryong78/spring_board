@@ -16,4 +16,6 @@ public interface AttachService {
 	public int delete(@Param("uuid") String uuid, @Param("attachNo") int attachNo);
 	
 	public AttachFileVO get(@Param("uuid") String uuid, @Param("attachNo") int attachNo);
+	
+	public int allDelete(int attachNo);
 }

@@ -5,33 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-.uploadResult {
-	width: 100%;
-	background-color: gray;
-}
-
-.uploadResult ul {
-	display: flex;
-	flex-flow: row;
-	justify-content: center;
-	align-items: center;
-}
-
-.uploadResult ul li {
-	list-style: none;
-	padding: 10px;
-}
-
-.uploadResult ul li img {
-	width: 100px;
-}
-</style>
+<link rel="stylesheet" href="/resources/css/upload.css">
 </head>
 <body>
 	<!-- method="post" -->
 	<form action="uploadFormAction" enctype="multipart/form-data" name="fileUploadForm">
-		<input type="text" id="attachNo" name="attachNo" value="0">
+		<input type="text" id="attachNo" name="attachNo" value="0" hidden="hidden">
 		<input type='file' name='uploadFile' multiple>
 		<!-- <button>Submit</button> -->
 		<button type="button" id="uploadBtn">ajax</button>
@@ -63,7 +42,7 @@ function attachGetList(attachNo){
 	      		
       			if(vo.fileType =='Y'){
 	      			
-	      			str_fileListContent +="<li><img src='/display?fileName=" + s_savePath +"'><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";		
+	      			str_fileListContent +="<li><img src='/display?fileName=" + s_savePath +"'><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>X</span></li>";		
       			} else {
 	      			str_fileListContent += "<li><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";
       			}
@@ -92,6 +71,11 @@ function attachDelete(uuid,attachNo){
 
 <script type="text/javascript">
 $(document).ready(function(){
+	if('{board.attachNo}' != ''){
+		$("input[name=attachNo]").val(0);
+	} else {
+		$("input[name=attachNo]").val('{board.attachNo}');
+	}
 	var attachNo = $("#attachNo").val();
 	var str_fileListContent = "";
 	
@@ -120,8 +104,11 @@ $(document).ready(function(){
 	      			} else {
 		      			str_fileListContent += "<li><a href='/download?fileName="+ savePath + "'>" + vo.fileName + "</a><span onclick=attachDelete('"+ vo.uuid +"','"+ vo.attachNo +"')>삭제</span></li>";
 	      			}
-				$("#attachNo").val(attachNo);
+	      		//#으로 접근시 중복 선택불가, tag로 접근해야 중복접근가능
+				//$("#attachNo").val(attachNo);
+	      		$("input[name=attachNo]").val(attachNo);
 				attachGetList(attachNo);
+				$("#uploadFile").val("");
 	      		});
 			$("#fileList").html(str_fileListContent);
 	      	}

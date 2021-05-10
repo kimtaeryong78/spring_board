@@ -12,7 +12,6 @@
 <div class="row">
 	<div class="col-lg 12">
 		<div class="panel panel-default">
-
 			<div class="panel-heading">Board Register</div>
 			<div class="panel-body">
 				<form action="/board/register" method="post">
@@ -26,19 +25,18 @@
 					<div class="form-group">
 						<label>Writer</label><input type="text" class="form-control" name="writer">
 					</div>
+					<div class="uploadResult">
+						<ul id="fileList">
+						</ul>
+					</div>
+					<input type="text" id="attachNo" name="attachNo" value="0" hidden="hidden">
 					<button type="submit" class="btn btn-default">Submit Button</button>
 					<button type="reset" class="btn btn-default">Reset Button</button>
 				</form>
+				<jsp:include page="../uploadFormAction.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- <script type="text/javascript">
-$('button').on("click",function(e){
-	
-	if(/.{2,6}/.test()){
-		false;
-	}
-});
-</script> -->
+
 <%@ include file="../includes/footer.jsp"%>
