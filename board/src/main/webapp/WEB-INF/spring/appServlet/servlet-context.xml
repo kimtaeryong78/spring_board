@@ -29,7 +29,14 @@
 	<!-- resource -->
 	<resources location="/resources/" mapping="/resources/**"/>
 	
-	 <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> 
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> 
   
+	<beans:bean id="loginInterceptor" class="jmp.spring.interceptor.AuthInterceptor"/>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/**"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	</interceptors>	
 </beans:beans>

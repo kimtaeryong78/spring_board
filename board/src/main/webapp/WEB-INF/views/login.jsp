@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
@@ -23,6 +25,9 @@
     <!-- Custom Fonts -->
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<!-- jQuery -->
+	<script src="/resources/vendor/jquery/jquery.min.js"></script>
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,10 +36,13 @@
     <![endif]-->
 </head>
 <script>
-var result = '${result}';
-if(result != ''){
-	alert(result);
-}
+var msg = '${msg}';
+
+$(document).ready(function(){
+	if(msg != ''){
+		$("#errorMsgArea").text(msg);
+	}
+});
 
 </script>
 <body>
@@ -48,6 +56,7 @@ if(result != ''){
                     <div class="panel-body">
                         <form role="form" action="/loginAction" method="post">
                             <fieldset>
+                            	<div id="errorMsgArea"></div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="id" name="id" type="id" autofocus>
                                 </div>

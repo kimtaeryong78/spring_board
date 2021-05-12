@@ -16,12 +16,20 @@ public class UserServiceImpl implements UserService{
 	UserMapper um;
 	
 	@Override
-	public UserVO get(String id, String pwd) {
-		return um.getUser(id, pwd);
+	public UserVO get(UserVO user) {
+		user = um.getUser(user);
+		List<String> role = um.getUserRole(user);
+		user.setUserRole(role);
+		return user;
 	}
 	
 	@Override
 	public List<UserVO> getList() {
 		return um.getUserList();
+	}
+	
+	@Override
+	public List<String> roles(UserVO user) {
+		return um.getUserRole(user);
 	}
 }

@@ -34,16 +34,27 @@ public class UserMapperTests {
 	
 	@Test
 	public void test2() {
-		um.getUser("user01", "1234");
+		UserVO user = new UserVO();
+		user.setId("user01");
+		user.setPwd("1234");
+		um.getUser(user);
 	}
 	
 	@Test
 	public void test3() {
 		UserVO user = new UserVO();
-		user.setId("admin");
+		user.setId("user01");
 		user.setPwd("1234");
 		user.setEmail("admin@google.com");
 		user.setName("어드민");
 		um.addUser(user);
+	}
+	
+	@Test
+	public void test4() {
+		UserVO vo = new UserVO();
+		vo.setId("user01");
+		um.getUserRole(vo);
+		log.error(um.getUserRole(vo));
 	}
 }

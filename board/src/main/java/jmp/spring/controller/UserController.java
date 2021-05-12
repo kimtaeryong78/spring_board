@@ -1,15 +1,12 @@
 package jmp.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.sun.mail.iap.Response;
+import org.springframework.web.bind.annotation.*;
 
 import jmp.spring.service.UserService;
 import jmp.spring.vo.UserVO;
@@ -28,18 +25,24 @@ public class UserController {
 	}
 	
 	@PostMapping("/loginAction")
-	public String loginProcess(@RequestParam("id") String id, @RequestParam("pwd") String pwd, Model model) {
+	public String loginProcess(UserVO vo, Model model,HttpServletRequest req) {
 		String page = "";
-		UserVO user = us.get(id, pwd);
-		//HttpSession session = 
+		UserVO user = us.get(vo);
 		if(user!=null) {
-			
-			model.addAttribute("user",user);
-			page = "loginAction";
+			HttpSession session =  req.getSession();
+			session.setAttribute("user", user);
+			page = "redirect:/board/list";
 		} else {
-			model.addAttribute("result","fail");
+			model.addAttribute("msg","fail");
 			page = "login";
 		}
 		return page;
+	}
+	
+	@GetMapping("/logout")
+	public String logout(Model model,HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.invalidate();
+		return "redirect:/login";
 	}
 }

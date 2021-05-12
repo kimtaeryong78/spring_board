@@ -9,6 +9,9 @@
 	<select id="getUser" resultType="jmp.spring.vo.UserVO">
 		select * from users where id=#{id} and pwd=#{pwd}
 	</select>
+	<select id="getUserRole" resultType="string">
+		select role_id from users_role where id=#{id}
+	</select>
 	<insert id="addUser">
 		insert into users (ID,PWD,ENABLED,NAME,EMAIL) values (#{id}, #{pwd}, 1, #{name}, #{email})
 	</insert>
