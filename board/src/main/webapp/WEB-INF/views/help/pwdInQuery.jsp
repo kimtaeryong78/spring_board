@@ -4,7 +4,6 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,14 +35,6 @@
     <![endif]-->
 </head>
 <script>
-var msg = '${msg}';
-
-$(document).ready(function(){
-	if(msg != ''){
-		$("#errorMsgArea").text(msg);
-	}
-});
-
 </script>
 <body>
     <div class="container">
@@ -51,29 +42,19 @@ $(document).ready(function(){
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">비밀번호 찾기</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="/loginAction" method="post">
+                        <form role="form" action="/help/pwdCheck" method="post">
                             <fieldset>
-                            	<div id="errorMsgArea"></div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="id" name="id" type="text" autofocus>
+                                    <input class="form-control" placeholder="id" name="id" type="text" pattern="[0-9A-Za-z]{2,12}" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="pwd" type="password" value="">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="useCookie" type="checkbox" value="useCookie">Remember Me
-                                    </label>
+                                    <input class="form-control" placeholder="email" name="email" type="email">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button class="btn btn-lg btn-success btn-block">Login</button>
-                                <button type="button" onclick="location.href='/member'" class="btn btn-lg btn-success btn-block">회원가입</button>
-                                <br>
-                                <a onclick="window.open('/help/idInQuery', 'windowPop', 'width=490, height=560, left=400, top=400, resizable = yes')">아이디</a>
-                                <a onclick="window.open('/help/pwdInQuery', 'windowPop', 'width=400, height=600, left=400, top=400, resizable = yes')">&middot; 비밀번호</a> 찾기
+                                <button class="btn btn-lg btn-success btn-block">search</button>
                             </fieldset>
                         </form>
                     </div>

@@ -57,4 +57,19 @@ public class UserMapperTests {
 		um.getUserRole(vo);
 		log.error(um.getUserRole(vo));
 	}
+	
+	@Test
+	public void test5() {
+		UserVO vo = new UserVO();
+		vo.setSessionKey("54276C266288B8E58ACC84CCB2810B92");
+		um.getSessionKey(vo);
+	}
+	
+	@Test
+	public void test6() {
+		UserVO vo = new UserVO();
+		vo.setId("user01");
+		vo.setName("일번");
+		vo.setEmail("1@naver.com");
+	}
 }

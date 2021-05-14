@@ -12,6 +12,8 @@ public class UserVO {
 	String name;
 	String email;
 	List<String> userRole;	//권한
+	String sessionKey;
+	Date sessionLimit;
 	
 	/**
 	 * 권한 확인

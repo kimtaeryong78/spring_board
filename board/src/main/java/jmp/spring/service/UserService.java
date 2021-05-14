@@ -10,4 +10,11 @@ public interface UserService {
 	UserVO get(UserVO user);
 	
 	List<String> roles(UserVO user);
+	
+	int autoLogin(UserVO user);
+	
+	UserVO loginSessionKey(UserVO user);
+	
+	int add(UserVO user);
+	
 }

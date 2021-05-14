@@ -31,12 +31,18 @@
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> 
   
-	<beans:bean id="loginInterceptor" class="jmp.spring.interceptor.AuthInterceptor"/>
+	<beans:bean id="AuthInterceptor" class="jmp.spring.interceptor.AuthInterceptor"/>
 	
+	<beans:bean id="LoginInterceptor" class="jmp.spring.interceptor.LoginInterceptor"/>
+		
 	<interceptors>
 		<interceptor>
 			<mapping path="/board/**"/>
-			<beans:ref bean="loginInterceptor"/>
+			<beans:ref bean="AuthInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/loginAction"/>
+			<beans:ref bean="LoginInterceptor"/>
 		</interceptor>
 	</interceptors>	
 </beans:beans>

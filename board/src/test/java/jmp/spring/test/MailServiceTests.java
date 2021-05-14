@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import jmp.spring.service.MailService;
+import jmp.spring.vo.UserVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -28,9 +29,13 @@ public class MailServiceTests {
 	public void Test() {
 		log.error("mail service test...................");
 		long start = System.currentTimeMillis();
-		long temp = ms.welcomeMailSend();
+		//String temp = ms.welcomeMailSend();
+		UserVO user = new UserVO();
+		user.setEmail("kimtaeryong78@gmail.com");
+		user.setName("김태룡");
+		ms.idMailSend(user);
 		long end = System.currentTimeMillis();
-		log.error("auth_num....................... : "+temp);
+		//log.error("auth_num....................... : "+temp);
 		log.error("time : " + (end-start)/1000.0 +"초");
 		log.error("==========================================");
 	}

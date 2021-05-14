@@ -7,7 +7,7 @@
 		select ID,PWD,ENABLED,NAME,EMAIL from users
 	</select>
 	<select id="getUser" resultType="jmp.spring.vo.UserVO">
-		select * from users where id=#{id} and pwd=#{pwd}
+		select * from users where id=#{id}
 	</select>
 	<select id="getUserRole" resultType="string">
 		select role_id from users_role where id=#{id}
@@ -15,4 +15,25 @@
 	<insert id="addUser">
 		insert into users (ID,PWD,ENABLED,NAME,EMAIL) values (#{id}, #{pwd}, 1, #{name}, #{email})
 	</insert>
+	<insert id="addtUserRole">
+		insert into users_role VALUES (#{id},#{role}) 
+	</insert>
+	<update id="autoLogin">
+		update users set sessionkey=#{sessionKey},sessionlimit=sysdate+7 where id=#{id}
+	</update>
+	<select id="getSessionKey" resultType="jmp.spring.vo.UserVO">
+		select * from users where sessionkey=#{sessionKey} and sessionlimit > sysdate
+	</select>
+	<update id="tempPwdSetting">
+		update users set pwd=#{pwd} where id=#{id}
+	</update>
+	<update id="updateUser">
+		update users set pwd=#{pwd} where id=#{id}
+	</update>
+	<select id="getUserByNameAndEmail" resultType="jmp.spring.vo.UserVO">
+		select * from users where name=#{name} and email=#{email}
+	</select>
+	<select id="getUserByIDAndEmail" resultType="jmp.spring.vo.UserVO">
+		select * from users where id=#{id} and email=#{email}
+	</select>
 </mapper>
